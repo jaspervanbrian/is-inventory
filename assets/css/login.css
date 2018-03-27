@@ -1,8 +1,13 @@
+@font-face {
+    font-family: WorkSans;
+    src: url(../fonts/Work_Sans/WorkSans-Light.ttf);
+}
 body {
     background: url("../images/bgright.png"), url("../images/bgleft.png");
     background-repeat : no-repeat, no-repeat;
     background-position: top right, bottom left;
     min-height: 100vh;
+    font-family: WorkSans;
 }
 .margin-bottom-35 {
 	margin-bottom: 35px;

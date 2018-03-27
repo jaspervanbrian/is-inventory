@@ -4,7 +4,7 @@ namespace App\Database;
 
 class Connection
 {
-	public $connection;
+	public $db_connection;
 	public function __construct()
 	{
 		$server = "localhost";
@@ -12,6 +12,6 @@ class Connection
 		$username = "root";
 		$password = "weedonthecouch1234";
 
-		$this->connection = new \PDO("mysql:host={$server};dbname={$db}", $username, $password);
+		$this->db_connection = new \PDO("mysql:host={$server};dbname={$db}", $username, $password);
 	}
 }

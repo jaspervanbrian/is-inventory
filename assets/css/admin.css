@@ -1,0 +1,28 @@
+@font-face {
+    font-family: WorkSans;
+    src: url(../fonts/Work_Sans/WorkSans-Regular.ttf);
+}
+body {
+	padding-top: 80px;
+	font-family: WorkSans;
+}
+.container {
+	padding-top: 30px;
+}
+
+#flash-message {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  z-index: 10;
+}
+.table > tbody > tr:hover {
+	cursor: pointer;
+}
+.top-margin {
+  margin-top: 35px;
+}
+
+.nav-pills.flex-column .nav-item:hover {
+  background-color: #e0e0d1
+}

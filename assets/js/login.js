@@ -24,13 +24,13 @@ $(document).ready(function() {
                 $form.attr("action", "app/Controllers/LoginSuccessController.php");
                 $form.submit();
             } else if (response==="Invalid") {
-                $("#flash-message").empty().addClass("alert alert-danger").show().append("Wrong username or password.").fadeOut(5000);
+                $("#flash-message").empty().addClass("alert alert-danger").show().append("Wrong username or password.").delay( 5000 ).slideUp(300);
             } else if (response==="DBError") {
-                $("#flash-message").empty().addClass("alert alert-danger").show().append("Database connection error.").fadeOut(5000);
+                $("#flash-message").empty().addClass("alert alert-danger").show().append("Database connection error.").delay( 5000 ).slideUp(300);
             }
         });
         request.fail(function (jqXHR, textStatus, errorThrown){
-            $("#flash-message").empty().show().append(errorThrown).fadeOut(5000);
+            $("#flash-message").empty().addClass("alert alert-danger").append(errorThrown).delay( 5000 ).slideUp(300);
         });
         request.always(function () {
             $inputs.prop("disabled", false);
