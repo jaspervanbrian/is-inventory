@@ -6,6 +6,7 @@
 				<?php echo htmlspecialchars($_SESSION['user']['username']) ?>
 			</a>
 			<div class="dropdown-menu dropdown-menu-right">
+				<button type="button" data-toggle="modal" data-target="#myCredentials" class="dropdown-item btn btn-primary">View my profile</button>
 				<form action="../../app/Controllers/LogoutController.php" method="post">
 					<button type="submit" class="dropdown-item btn btn-primary">Logout</button>
 				</form>

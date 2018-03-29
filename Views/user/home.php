@@ -19,6 +19,7 @@ if (isset($_SESSION['user'])) {
 	<script src="../../assets/js/jquery-3.3.1.min.js"></script>
 	<script src="../../assets/bootstrap4/js/bootstrap.js"></script>
 	<link rel="stylesheet" href="../../assets/css/user.css">
+	<script src="../../assets/js/user/user.js"></script>
 	<script src="../../assets/js/user/maininventory.js"></script>
 	<script src="../../assets/js/user/myissues.js"></script>
 </head>
@@ -42,7 +43,7 @@ if (isset($_SESSION['user'])) {
 					<label for="searchBy" class="d-flex align-items-center">Search By:</label>
 					<div class="col-3">
 						<select name="type" id="type" class="form-control">
-							<option value="name">Product name/brand</option>
+							<option value="name">Stock name/brand</option>
 							<option value="sticker_number">Sticker number</option>
 							<option value="category">Category</option>
 							<option value="status">Status</option>
@@ -102,10 +103,95 @@ if (isset($_SESSION['user'])) {
 			</div>
 		</div>
 	</div>
-  	<div id="flash-message" class="" role="alert"></div>
+  	<div id="flash-message" class="" role="alert" style="z-index: 9999999;"></div>
   	<div id="stockModals"></div>
 	<div id="returnModals"></div>
 	<div id="issueModals"></div>
+	<div>
+		<div class="modal fade" id="myCredentials" tabindex="-1" role="dialog" aria-labelledby="myCredentialsModal" aria-hidden="true">
+			<div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content">
+					<div class="modal-header">
+						<h5 class="modal-title" id="myCredentialsModal">Edit your credentials</h5>
+						<button type="button" class="close" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">&times;</span> </button> 
+					</div>
+					<div class="modal-body">
+						<!-- Nav tabs -->
+						<ul class="nav nav-tabs">
+							<li class="nav-item">
+								<a class="nav-link active" data-toggle="tab" href="#myDetails">Details</a>
+							</li>
+							<li class="nav-item">
+								<a class="nav-link" data-toggle="tab" href="#myPassword">Change Password</a>
+							</li>
+						</ul>
+
+						<!-- Tab panes -->
+						<div class="tab-content">
+							<div class="tab-pane active container" id="myDetails">
+								<form action="../../app/Controllers/Admin/EditUser.php" method="post" id="myDetailsForm">
+									<input type="hidden" name="id" value="<?= $_SESSION['user']['id'] ?>"> 
+									<div class="row">
+										<div class="col-12">
+											<h3>User Details</h3>
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col-6"> 
+											<small>Name: </small> 
+											<input type="text" name="name" value="<?= $_SESSION['user']['name'] ?>" class="form-control" required> 
+										</div>
+										<div class="col-6"> 
+											<small>Username: </small> 
+											<input type="text" name="username" value="<?= $_SESSION['user']['username'] ?>" class="form-control" required> 
+										</div>
+									</div>
+									<div class="row top-margin">
+										<div class="col-6"> 
+											<small>Email Address: </small> 
+											<input type="email" name="email_address" value="<?= $_SESSION['user']['email_address'] ?>" class="form-control" required> 
+										</div>
+										<div class="col-6"> 
+											<small>Role: </small> 
+											<select name="role" class="form-control" required disabled> 
+												<option value="user">User</option>
+											</select> 
+										</div>
+									</div>
+									<div class="row top-margin">
+										<div class="col-12 d-flex justify-content-center"> <button type="submit" class="btn btn-primary">Save changes</button> </div>
+									</div>
+								</form>
+							</div>
+							<div class="tab-pane container" id="myPassword">
+								<form action="../../app/Controllers/Admin/EditPassword.php" id="myPasswordForm" method="post">
+									<input type="hidden" name="id" value="<?= $_SESSION['user']['id'] ?>"> 
+									<div class="row">
+										<div class="col-12">
+											<h3>Change Password</h3>
+										</div>
+									</div>
+									<hr>
+									<div class="row">
+										<div class="col-6 offset-3">
+											<small>New Password <span class="text-danger">*</span></small>
+											<input type="password" name="password" class="form-control">
+										</div>
+									</div>
+									<div class="row top-margin">
+										<div class="col-12 d-flex justify-content-center"> <button type="submit" class="btn btn-primary">Save</button> </div>
+									</div>
+								</form>
+							</div>
+						</div>
+
+					</div>
+					<div class="modal-footer"> <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> </div>
+				</div>
+			</div>
+		</div>
+	</div>
   	<?php
   		if (isset($_SESSION['borrow'])) {
   			if ($_SESSION['borrow'] === "ok") {
@@ -116,8 +202,16 @@ if (isset($_SESSION['user'])) {
 				});
 			</script>
   	<?php
-  				unset($_SESSION['borrow']);
+  			} else if ($_SESSION['borrow'] === "err") {
+  	?>
+			<script>
+				$(document).ready(function() {
+					$("#flash-message").empty().addClass("alert alert-danger").show().append("The item is borrowed or unavailable right now.").delay( 5000 ).slideUp(300);	
+				});
+			</script>
+  	<?php
   			}
+  			unset($_SESSION['borrow']);
   		}
   		if (isset($_SESSION['return'])) {
   			if ($_SESSION['return'] === "ok") {
@@ -129,8 +223,17 @@ if (isset($_SESSION['user'])) {
 				});
 			</script>
   	<?php
-  				unset($_SESSION['return']);
+  			} else if ($_SESSION['return'] === "err") {
+  	?>
+			<script>
+				$(document).ready(function() {
+					$("#issues-tab").tab('show');
+					$("#flash-message").empty().addClass("alert alert-info").show().append("The item is already returned.").delay( 5000 ).slideUp(300);	
+				});
+			</script>
+  	<?php
   			}
+			unset($_SESSION['return']);
   		}
   	?>
 </body>
