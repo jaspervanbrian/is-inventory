@@ -17,7 +17,7 @@ if (isset($_POST['issue_id']) && isset($_POST['stock_id']) && isset($_SESSION['u
 	if ($is_returned) {
 		$_SESSION['return'] = "err";
 	} else {
-		$stock->return($_POST['stock_id']);
+		$stock->returnItem($_POST['stock_id']);
 		$_SESSION['return'] = "ok";
 	}
 	header('Location: ../../../Views/user/home.php');

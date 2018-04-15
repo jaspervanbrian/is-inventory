@@ -4,6 +4,9 @@ $(document).ready(function() {
     var currentPage;
     var totalPages;
 
+    var sortBy = "name";
+    var step = "ASC";
+    
     var data = {
         type: $("#type").val(),
         keyword: $("#searchKeyword").val(),
@@ -46,6 +49,8 @@ $(document).ready(function() {
                     type: $("#type").val(),
                     keyword: $("#searchKeyword").val(),
                     page: currentPage,
+                    orderby: sortBy,
+                    step: step,
                 };
                 getMainInventory(data);
                 if (currentPage === 1) {
@@ -62,6 +67,8 @@ $(document).ready(function() {
                     type: $("#type").val(),
                     keyword: $("#searchKeyword").val(),
                     page: currentPage,
+                    orderby: sortBy,
+                    step: step,
                 };
                 getMainInventory(data);
                 if (currentPage === totalPages) {
@@ -75,6 +82,8 @@ $(document).ready(function() {
                     type: $("#type").val(),
                     keyword: $("#searchKeyword").val(),
                     page: currentPage,
+                    orderby: sortBy,
+                    step: step,
                 };
                 getMainInventory(data);
                 if (currentPage === 1) {
@@ -135,11 +144,93 @@ $(document).ready(function() {
         requestStockList.done(function (response, textStatus, jqXHR){
             var stocks = JSON.parse(response);
             if (stocks.length === 0) {
-            	$("#stockList").empty().append('<div class="alert alert-danger">No resuls found.</div>');
+            	$("#stockList").empty().append('<div class="alert alert-danger">No results found.</div>');
                 $("#stockModals").empty();
             } else {
                 $("#stockModals").empty();
-            	$("#stockList").empty().append('<table class="table table-hover"><thead class="thead-dark"><tr><th>Sticker number</th><th>Name/Brand</th><th>Category</th><th>Status</th></tr></thead><tbody></tbody></table>');
+            	$("#stockList").empty().append('<table class="table table-hover"><thead class="thead-dark"><tr><th class="sortBy ' + (sortBy === "sticker_number" ? "sorted" : "") + '">Sticker number ' + (sortBy === "sticker_number" && step === "ASC" ? "<span class=\"fas fa-caret-down\"></span>" : (sortBy === "sticker_number" && step === "DESC" ? ("<span class=\"fas fa-caret-up\"></span>") : "")) + '</th><th class="sortBy ' + (sortBy === "name" ? "sorted" : "") + '">Name/Brand ' + (sortBy === "name" && step === "ASC" ? "<span class=\"fas fa-caret-down\"></span>" : (sortBy === "name" && step === "DESC" ? ("<span class=\"fas fa-caret-up\"></span>") : "")) + '</th><th class="sortBy ' + (sortBy === "category" ? "sorted" : "") + '">Category ' + (sortBy === "category" && step === "ASC" ? "<span class=\"fas fa-caret-down\"></span>" : (sortBy === "category" && step === "DESC" ? ("<span class=\"fas fa-caret-up\"></span>") : "")) + '</th><th class="sortBy ' + (sortBy === "status" ? "sorted" : "") + '">Status ' + (sortBy === "status" && step === "ASC" ? "<span class=\"fas fa-caret-down\"></span>" : (sortBy === "status" && step === "DESC" ? ("<span class=\"fas fa-caret-up\"></span>") : "")) + '</th></tr></thead><tbody></tbody></table>');
+                $(".sortBy").on('click', function() {
+                    var text = $.trim($(this).text());
+                    var sorted = $.trim($("#stockList").find(".sorted").text());
+                    
+                    if (text === "Sticker number") {
+                        sortBy = "sticker_number";
+                        if (text === sorted) {
+                            if (step === "ASC") {
+                                step = "DESC";
+                            } else if (step === "DESC") {
+                                step = "ASC";
+                            }
+                        } else {
+                            step = "ASC";
+                        }
+                        data = {
+                            type: $("#type").val(),
+                            keyword: $("#searchKeyword").val(),
+                            page: currentPage,
+                            orderby: sortBy,
+                            step: step,
+                        };
+                        getMainInventory(data);
+                    } else if (text === "Name/Brand") {
+                        sortBy = "name";
+                        if (text === sorted) {
+                            if (step === "ASC") {
+                                step = "DESC";
+                            } else if (step === "DESC") {
+                                step = "ASC";
+                            }
+                        } else {
+                            step = "ASC";
+                        }
+                        data = {
+                            type: $("#type").val(),
+                            keyword: $("#searchKeyword").val(),
+                            page: currentPage,
+                            orderby: sortBy,
+                            step: step,
+                        };
+                        getMainInventory(data);
+                    } else if (text === "Category") {
+                        sortBy = "category";
+                        if (text === sorted) {
+                            if (step === "ASC") {
+                                step = "DESC";
+                            } else if (step === "DESC") {
+                                step = "ASC";
+                            }
+                        } else {
+                            step = "ASC";
+                        }
+                        data = {
+                            type: $("#type").val(),
+                            keyword: $("#searchKeyword").val(),
+                            page: currentPage,
+                            orderby: sortBy,
+                            step: step,
+                        };
+                        getMainInventory(data);
+                    } else if (text === "Status") {
+                        sortBy = "status";
+                        if (text === sorted) {
+                            if (step === "ASC") {
+                                step = "DESC";
+                            } else if (step === "DESC") {
+                                step = "ASC";
+                            }
+                        } else {
+                            step = "ASC";
+                        }
+                        data = {
+                            type: $("#type").val(),
+                            keyword: $("#searchKeyword").val(),
+                            page: currentPage,
+                            orderby: sortBy,
+                            step: step,
+                        };
+                        getMainInventory(data);
+                    }
+                });
             	$stockRows = $("#stockList").find('tbody');
             	$.each(stocks, function(i, stock) {
                     if (stock.status === "Available") {

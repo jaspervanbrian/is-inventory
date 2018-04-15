@@ -19,6 +19,11 @@ body {
 .table > tbody > tr:hover {
 	cursor: pointer;
 }
+
+.table > thead > tr > th:hover {
+  cursor: pointer;
+}
+
 .top-margin {
   margin-top: 35px;
 }

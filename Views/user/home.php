@@ -18,6 +18,7 @@ if (isset($_SESSION['user'])) {
 	<link rel="stylesheet" href="../../assets/bootstrap4/css/bootstrap.min.css">
 	<script src="../../assets/js/jquery-3.3.1.min.js"></script>
 	<script src="../../assets/bootstrap4/js/bootstrap.js"></script>
+	<link rel="stylesheet" href="../../assets/fonts/fontawesome-free-5.0.10/web-fonts-with-css/css/fontawesome-all.css">
 	<link rel="stylesheet" href="../../assets/css/user.css">
 	<script src="../../assets/js/user/user.js"></script>
 	<script src="../../assets/js/user/maininventory.js"></script>
