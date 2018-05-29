@@ -10,7 +10,7 @@ class Connection
 		$server = "localhost";
 		$db = "is_inventory";
 		$username = "root";
-		$password = "weedonthecouch1234";
+		$password = "";
 
 		$this->db_connection = new \PDO("mysql:host={$server};dbname={$db}", $username, $password);
 	}
